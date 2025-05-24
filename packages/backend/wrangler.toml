@@ -1,0 +1,11 @@
+name = "my-hono-worker"
+main = "dist/index.js"
+compatibility_date = "2025-05-24"
+
+[build]
+command = "pnpm run build"
+cwd = "."
+watch_dir = "src"
+
+[env.production]
+# 環境変数など必要に応じて
