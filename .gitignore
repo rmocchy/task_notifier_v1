@@ -1,0 +1,10 @@
+node_modules
+dist
+pnpm-lock.yaml
+db_data
+*tmp*
+
+env/*
+!env/.env.*.sample
+
+.vscode
