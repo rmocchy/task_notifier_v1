@@ -11,25 +11,21 @@ make setup_env
 ## direnv
 direnv allow
 ```
-2. 依存関係のインストール
-```
-pnpm install
-```
-1. db起動/ migration/ insert-seed-data
+2. 起動/ migration/ insert-seed-data
 ```
 ## 起動
 docker compose up -d
 ## migration
 make migrate_be_local-docker
 ```
-1. ビルド&起動
-独自コマンド`mpm`を使ってどれを起動するか選択することも可能: `mpm build/ mpm start`
-- FE (注意: 終了時は"q"キーを押さないとviteの使用上code=1で終了する)
+
+蛇足: dockerを介さずにサービスを起動することも可能(やらなくても良い)
 ```
+## install
+pnpm install
+## FE
 make start_frontend
-```
-- BE
-```
+## BE
 make start_backend
 ```
 
