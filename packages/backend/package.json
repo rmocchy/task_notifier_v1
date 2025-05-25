@@ -4,15 +4,17 @@
   "private": true,
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "start": "node ./dist/main.js",
-    "dev": "ts-node-dev --respawn --transpile-only src/main.ts"
+    "start": "node ./dist/cmd/local.js",
+    "dev": "ts-node-dev --respawn --transpile-only cmd/local.ts"
   },
   "dependencies": {
     "@hono/node-server": "^1.14.2",
     "@monorepo/common": "workspace:*",
     "dotenv": "^16.4.5",
     "hono": "^3.0.0",
-    "postgres": "^3.4.3"
+    "postgres": "^3.4.3",
+    "reflect-metadata": "^0.2.2",
+    "tsyringe": "^4.10.0"
   },
   "devDependencies": {
     "@ts-safeql/eslint-plugin": "^1.1.3",

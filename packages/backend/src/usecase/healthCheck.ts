@@ -1,62 +1,29 @@
-import { DatabaseClient, testDatabaseConnection } from '../infra/db'
-import { getDatabaseConfig } from '../config/database'
+import { injectable, inject } from 'tsyringe'
+import { DatabaseClient } from '../infra/db/types'
 
-export interface HealthCheckResult {
+export interface HealthCheckResponse {
   status: 'healthy' | 'unhealthy'
-  database: {
-    connected: boolean
-    config: {
-      host: string
-      database: string
-      schema: string
-      environment: string
-    }
-    usersCount?: number
-    error?: {
-      message: string
-      name: string
-    }
-  }
   timestamp: string
+  details: {
+    database: boolean
+  }
 }
 
-export const checkDatabaseHealth = async (
-  dbClient: DatabaseClient
-): Promise<HealthCheckResult> => {
-  const config = getDatabaseConfig()
-  const baseResult = {
-    database: {
-      config: {
-        host: config.host,
-        database: config.database,
-        schema: config.schema,
-        environment: process.env.NODE_ENV || 'development'
-      }
-    },
-    timestamp: new Date().toISOString()
-  }
+@injectable()
+export class HealthCheckUseCase {
+  constructor(
+    @inject('DatabaseClient') private dbClient: DatabaseClient
+  ) {}
 
-  const testResult = await testDatabaseConnection(dbClient)
+  async execute(): Promise<HealthCheckResponse> {
+    const dbHealth = await this.dbClient.isHealthy()
 
-  if (!testResult.isConnected) {
     return {
-      status: 'unhealthy',
-      database: {
-        ...baseResult.database,
-        connected: false,
-        error: testResult.error
-      },
-      timestamp: baseResult.timestamp
+      status: dbHealth ? 'healthy' : 'unhealthy',
+      timestamp: new Date().toISOString(),
+      details: {
+        database: dbHealth
+      }
     }
-  }
-
-  return {
-    status: 'healthy',
-    database: {
-      ...baseResult.database,
-      connected: true,
-      usersCount: testResult.userCount
-    },
-    timestamp: baseResult.timestamp
   }
 } 
