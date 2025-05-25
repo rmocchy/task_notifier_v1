@@ -1,5 +1,5 @@
 import { injectable, inject } from 'tsyringe'
-import { DatabaseClient } from '../infra/db/types'
+import { DBClient } from '../infra/clients/db_client'
 
 export interface HealthCheckResponse {
   status: 'healthy' | 'unhealthy'
@@ -12,7 +12,7 @@ export interface HealthCheckResponse {
 @injectable()
 export class HealthCheckUseCase {
   constructor(
-    @inject('DatabaseClient') private dbClient: DatabaseClient
+    @inject(DBClient) private dbClient: DBClient
   ) {}
 
   async execute(): Promise<HealthCheckResponse> {

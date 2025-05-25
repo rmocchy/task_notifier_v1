@@ -1,23 +1,15 @@
-import InitBackendDI from "../src/di_backend";
+import "reflect-metadata"
+
 import NewApp from "../app/local";
 import { serve } from "@hono/node-server";
-import { DatabaseConfig, getDBUrl } from "../configs/database";
-import { InitDBConnection } from "../src/infra/db/PostgresClient";
+import { GetConfig as GetDBConfig } from "../configs/database";
+import { SetDIValue } from "../src/di";
 
 const main = async () => {
-  const dbConfig: DatabaseConfig = {
-    url: getDBUrl(),
-  };
   const port = 8787;
 
   // DI
-  InitBackendDI(dbConfig);
-
-  // DB
-  await InitDBConnection(dbConfig).catch((error) => {
-    console.error('Failed to initialize database:', error)
-    process.exit(1)
-  });
+  SetDIValue("DBConfig", GetDBConfig());
 
   const app = NewApp();
 

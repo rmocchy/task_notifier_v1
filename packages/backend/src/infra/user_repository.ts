@@ -1,21 +1,17 @@
-import { injectable, inject } from 'tsyringe'
-import { DatabaseClient } from './db/types'
-import postgres from 'postgres'
-
-type SqlInstance = postgres.Sql<{[key: string]: postgres.PostgresType<any>}>
+import { injectable, inject } from "tsyringe";
+import { countUsersByCreatedAt } from "../../generated/users.queries";
+import { DBClient } from "./clients/db_client";
 
 @injectable()
 export class UserRepository {
-  constructor(
-    @inject('DatabaseClient') private dbClient: DatabaseClient
-  ) {}
+  constructor(@inject(DBClient) private client: DBClient) {}
 
-  async countUsers(): Promise<number> {
-    const client = (this.dbClient as any).client as SqlInstance
-    if (!client) {
-      throw new Error('Database client is not connected')
-    }
-    const result = await client`SELECT COUNT(*) as count FROM users`
-    return parseInt(result[0].count, 10)
+  async CountUsersByCreatedAt(createdAt: Date): Promise<number> {
+    const result = await countUsersByCreatedAt.run(
+      { created_at: createdAt ? new Date(createdAt).toISOString() : null },
+      this.client.getPool() // Pool インスタンスを直接使う
+    );
+    const count = result[0]?.count ? parseInt(result[0].count, 10) : 0;
+    return count;
   }
-} 
+}
