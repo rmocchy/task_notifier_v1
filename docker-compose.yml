@@ -52,3 +52,28 @@ services:
     env_file:
       - ./env/.env.frontend
     command: make start_frontend
+
+  backend:
+    build:
+      context: .
+      dockerfile: docker/backend/Dockerfile
+    ports:
+      - "8787:8787"
+    volumes:
+      - ./packages/backend:/app/packages/backend
+      - ./packages/common:/app/packages/common
+      - ./package.json:/app/package.json
+      - ./pnpm-workspace.yaml:/app/pnpm-workspace.yaml
+      - ./pnpm-lock.yaml:/app/pnpm-lock.yaml
+      - ./tsconfig.base.json:/app/tsconfig.base.json
+      - ./Makefile:/app/Makefile
+      - /app/packages/backend/node_modules
+      - /app/packages/common/node_modules
+    environment:
+      - NODE_ENV=development
+    env_file:
+      - ./env/.env.backend
+    command: make start_backend
+    depends_on:
+      postgres:
+        condition: service_healthy
