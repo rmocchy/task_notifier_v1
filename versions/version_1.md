@@ -1,3 +1,13 @@
+# version: 1.1
+## tag
+ - v1.1
+## last-commit
+ - 0f7d0921a050343b298f975f1ec7e93afa2117c5
+## what's new?
+ - FE, BEのサービスをDockerから起動できるようにする
+ - hotreloadの有効化
+ - BEのloggingミドルウェアの実装
+
 # version: 1.0
 ## tag
  - v1.0
