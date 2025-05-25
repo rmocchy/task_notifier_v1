@@ -5,7 +5,7 @@ const app = new Hono()
 
 app.get('/health', (c) => c.json({ status: 'ok' }))
 
-const port = 10000
+const port = 8787
 
 serve({
   fetch: app.fetch,
