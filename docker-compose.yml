@@ -30,3 +30,25 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/frontend/Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./packages/frontend:/app/packages/frontend
+      - ./packages/common:/app/packages/common
+      - ./package.json:/app/package.json
+      - ./pnpm-workspace.yaml:/app/pnpm-workspace.yaml
+      - ./pnpm-lock.yaml:/app/pnpm-lock.yaml
+      - ./tsconfig.base.json:/app/tsconfig.base.json
+      - ./Makefile:/app/Makefile
+      - /app/packages/frontend/node_modules
+      - /app/packages/common/node_modules
+    environment:
+      - NODE_ENV=development
+    env_file:
+      - ./env/.env.frontend
+    command: make start_frontend
