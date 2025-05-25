@@ -47,8 +47,6 @@ services:
       - ./Makefile:/app/Makefile
       - /app/packages/frontend/node_modules
       - /app/packages/common/node_modules
-    environment:
-      - NODE_ENV=development
     env_file:
       - ./env/.env.frontend
     command: make start_frontend
@@ -69,8 +67,6 @@ services:
       - ./Makefile:/app/Makefile
       - /app/packages/backend/node_modules
       - /app/packages/common/node_modules
-    environment:
-      - NODE_ENV=development
     env_file:
       - ./env/.env.backend
     command: make start_backend-dev
