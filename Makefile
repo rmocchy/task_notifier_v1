@@ -9,6 +9,10 @@ start_frontend:
 start_backend:
 	pnpm backend build && pnpm backend start
 
+.PHONY: start_backend-dev
+start_backend-dev:
+	pnpm backend dev
+
 ## 開発用
 ## migrate_* は指定のサービスのマイグレーションを実行する
 ## migrate_*-docker は指定のサービスのマイグレーションをDockerコンテナで実行する
