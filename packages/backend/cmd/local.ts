@@ -2,6 +2,7 @@ import InitBackendDI from "../src/di_backend";
 import NewApp from "../app/local";
 import { serve } from "@hono/node-server";
 import { DatabaseConfig, getDBUrl } from "../configs/database";
+import { InitDBConnection } from "../src/infra/db/PostgresClient";
 
 const main = async () => {
   const dbConfig: DatabaseConfig = {
@@ -11,6 +12,12 @@ const main = async () => {
 
   // DI
   InitBackendDI(dbConfig);
+
+  // DB
+  await InitDBConnection(dbConfig).catch((error) => {
+    console.error('Failed to initialize database:', error)
+    process.exit(1)
+  });
 
   const app = NewApp();
 

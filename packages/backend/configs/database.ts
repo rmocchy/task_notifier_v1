@@ -10,7 +10,7 @@ export const getDBUrl = (): string => {
         const DB_HOST = Envs.DB_HOST || '';
         url =`postgres://${Envs.DB_USER}:${Envs.DB_PASS}@${DB_HOST}/${Envs.DB_NAME}`;
     } else {
-        const DB_HOST = 'localhost';
+        const DB_HOST = Envs.DB_HOST  || 'postgres'; // Docker Composeでのサービス名
         const DB_PORT = process.env.DB_PORT || '5432';
         url = `postgres://${Envs.DB_USER}:${Envs.DB_PASS}@${DB_HOST}:${DB_PORT}/${Envs.DB_NAME}`;
     }

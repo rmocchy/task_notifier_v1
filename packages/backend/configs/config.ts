@@ -7,7 +7,7 @@ export const Envs: {
     DB_SCHEMA: string
     // local用
     DB_PORT: string
-    // prd用
+    // prd&カスタムlocal用
     DB_HOST?: string
 } = {
     NODE_ENV:  process.env.NODE_ENV === 'production' ? 'production' : 'local',
@@ -18,6 +18,6 @@ export const Envs: {
     DB_SCHEMA: process.env.DB_SCHEMA || 'public',
     // local用
     DB_PORT: process.env.DB_PORT || '5432',
-    // prd用
+    // prd&カスタムlocal用
     DB_HOST: process.env.DB_HOST,
 }

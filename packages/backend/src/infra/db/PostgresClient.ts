@@ -1,8 +1,14 @@
 import { injectable, inject } from 'tsyringe'
 import postgres from 'postgres'
 import { DatabaseClient, DatabaseConfig } from './types'
+import { container } from 'tsyringe'
 
 type SqlInstance = postgres.Sql<{[key: string]: postgres.PostgresType<any>}>
+
+export async function InitDBConnection(config: DatabaseConfig) {
+  const dbClient = container.resolve<DatabaseClient>("DatabaseClient")
+  await dbClient.connect()
+}
 
 @injectable()
 export class PostgresClient implements DatabaseClient {
@@ -19,11 +25,20 @@ export class PostgresClient implements DatabaseClient {
     }
 
     try {
-      this.client = postgres(this.config.url, this.config.poolConfig) as SqlInstance
-      // 接続テスト
-      await this.query('SELECT 1')
+      this.client = postgres(this.config.url, {
+        max: 1,
+        idle_timeout: 20,
+        connect_timeout: 10,
+        transform: {
+          undefined: null,
+        },
+      }) as SqlInstance
+
+      // Test the connection
+      await this.client`SELECT 1`
     } catch (error) {
-      throw new Error(`Failed to connect to database: ${error}`)
+      this.client = null
+      throw error
     }
   }
 
@@ -36,7 +51,13 @@ export class PostgresClient implements DatabaseClient {
 
   async isHealthy(): Promise<boolean> {
     try {
-      await this.query('SELECT 1')
+      if (!this.client) {
+        await this.connect()
+      }
+      if (!this.client) {
+        return false
+      }
+      await this.client`SELECT 1`
       return true
     } catch {
       return false
@@ -47,7 +68,7 @@ export class PostgresClient implements DatabaseClient {
     if (!this.client) {
       throw new Error('Database client is not connected')
     }
-    const result = await this.client.unsafe(sql, params)
+    const result = await this.client(sql, params)
     return Array.from(result) as unknown as T[]
   }
 } 
