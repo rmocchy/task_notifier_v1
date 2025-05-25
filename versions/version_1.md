@@ -1,3 +1,11 @@
+# version: 1.1
+## tag
+ - v1.1
+## last-commit
+ - d396add8013c58903724c4a539f5e77deb60841f
+## what's new?
+ - FE, BEのサービスをDockerから起動できるようにする
+
 # version: 1.0
 ## tag
  - v1.0
