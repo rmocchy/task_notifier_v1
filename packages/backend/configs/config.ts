@@ -9,6 +9,10 @@ export const Envs: {
     DB_PORT: string
     // prd&カスタムlocal用
     DB_HOST?: string
+    // Google認証
+    GOOGLE_CLIENT_ID: string
+    GOOGLE_CLIENT_SECRET: string
+    GOOGLE_REDIRECT_URI: string
 } = {
     NODE_ENV:  process.env.NODE_ENV === 'production' ? 'production' : 'local',
     // 共通
@@ -20,4 +24,8 @@ export const Envs: {
     DB_PORT: process.env.DB_PORT || '5432',
     // prd&カスタムlocal用
     DB_HOST: process.env.DB_HOST,
+    // Google認証
+    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID || '',
+    GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET || '',
+    GOOGLE_REDIRECT_URI: process.env.GOOGLE_REDIRECT_URI || ''
 }

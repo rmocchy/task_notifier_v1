@@ -15,6 +15,7 @@
     "@pgtyped/runtime": "^2.4.2",
     "@prisma/client": "^6.8.2",
     "dotenv": "^16.4.5",
+    "google-auth-library": "^9.15.1",
     "hono": "^3.0.0",
     "pg": "^8.16.0",
     "postgres": "^3.4.3",

@@ -3,6 +3,7 @@ import "reflect-metadata"
 import NewApp from "../app/local";
 import { serve } from "@hono/node-server";
 import { GetConfig as GetDBConfig } from "../configs/database";
+import { GetGoogleAuthConfig } from "../configs/google_auth";
 import { SetDIValue } from "../src/di";
 
 const main = async () => {
@@ -10,6 +11,7 @@ const main = async () => {
 
   // DI
   SetDIValue("DBConfig", GetDBConfig());
+  SetDIValue("GoogleAuthConfig", GetGoogleAuthConfig());
 
   const app = NewApp();
 
