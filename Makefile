@@ -25,6 +25,11 @@ migrate_be_local-docker:
 	docker build -t migrate-local -f docker/migration/Dockerfile . && \
 	docker run --rm -v $(PWD):/app migrate-local make migrate_be_local -e DB_URL=${DB_URL_DOCKER} DB_USER=${DB_USER} DB_PASSWORD=${DB_PASS}
 
+.PHONY: sync_schema
+sync_api_schema:
+	pnpm -F backend generate:openapi &&\
+	pnpm -F frontend gen:api-all
+	
 ## サブコマンド
 ## よく使うコマンドは基本的にはdockerコンテナで実行するが、その実態処理はいかに記載する
 .PHONY: migrate_be_local

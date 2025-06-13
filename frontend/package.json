@@ -1,0 +1,25 @@
+{
+  "name": "@monorepo/frontend",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "vite --host",
+    "build": "vite build",
+    "gen:api-sso-auth": "openapi --input ../openapi/backend/sso-auth.json --output generated/api/backend/sso-auth --client axios",
+    "gen:api-users": "openapi --input ../openapi/backend/user.json --output generated/api/backend/user --client axios",
+    "gen:api-health": "openapi --input ../openapi/backend/health.json --output generated/api/backend/health --client axios",
+    "gen:api-all": "pnpm gen:api-sso-auth && pnpm gen:api-users&& pnpm gen:api-health"
+  },
+  "dependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.50",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@vitejs/plugin-react": "^4.0.0",
+    "openapi-typescript-codegen": "^0.29.0",
+    "vite": "^4.0.0"
+  }
+}

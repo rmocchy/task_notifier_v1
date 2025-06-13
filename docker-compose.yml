@@ -38,15 +38,13 @@ services:
     ports:
       - "5173:5173"
     volumes:
-      - ./packages/frontend:/app/packages/frontend
-      - ./packages/common:/app/packages/common
+      - ./frontend:/app/frontend
       - ./package.json:/app/package.json
       - ./pnpm-workspace.yaml:/app/pnpm-workspace.yaml
       - ./pnpm-lock.yaml:/app/pnpm-lock.yaml
       - ./tsconfig.base.json:/app/tsconfig.base.json
       - ./Makefile:/app/Makefile
-      - /app/packages/frontend/node_modules
-      - /app/packages/common/node_modules
+      - /app/frontend/node_modules
     env_file:
       - ./env/.env.frontend
     command: make start_frontend
@@ -58,15 +56,13 @@ services:
     ports:
       - "8787:8787"
     volumes:
-      - ./packages/backend:/app/packages/backend
-      - ./packages/common:/app/packages/common
+      - ./backend:/app/backend
       - ./package.json:/app/package.json
       - ./pnpm-workspace.yaml:/app/pnpm-workspace.yaml
       - ./pnpm-lock.yaml:/app/pnpm-lock.yaml
       - ./tsconfig.base.json:/app/tsconfig.base.json
       - ./Makefile:/app/Makefile
-      - /app/packages/backend/node_modules
-      - /app/packages/common/node_modules
+      - /app/backend/node_modules
     env_file:
       - ./env/.env.backend
     command: make start_backend-dev

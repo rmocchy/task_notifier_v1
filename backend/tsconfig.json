@@ -1,0 +1,16 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "dist",
+    "rootDir": ".",
+    "module": "CommonJS",
+    "target": "ES2022",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "paths": {
+      "backend/*": ["./*"] // ← backend ディレクトリのエイリアス
+    }
+  },
+  "include": ["src", "routes", "cmd", "configs", "gateway"]
+}

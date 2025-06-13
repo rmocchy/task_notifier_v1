@@ -13,11 +13,8 @@ COPY pnpm-lock.yaml ./
 COPY pnpm-workspace.yaml ./
 COPY Makefile ./
 
-# commonパッケージをコピー
-COPY packages/common ./packages/common
-
 # バックエンドのpackage.jsonをコピー
-COPY packages/backend/package.json ./packages/backend/
+COPY backend/package.json ./backend/
 
 # pnpmをインストール
 RUN npm install -g pnpm
@@ -25,8 +22,10 @@ RUN npm install -g pnpm
 # 依存関係をインストール
 RUN pnpm install
 
+ENV PATH="/app/node_modules/.bin:/app/backend/node_modules/.bin:${PATH}"
+
 # バックエンドのソースコードをコピー
-COPY packages/backend ./packages/backend
+COPY backend ./backend
 
 # 作業ディレクトリをルートに設定
 WORKDIR /app
