@@ -1,10 +1,10 @@
 import getUserServiceAPI from './user/api';
 import getSsoAuthServiceAPI from './sso-auth/api';
 import getHealthServiceAPI from './health/api';
-import { APIGenrateFunc } from './types';
+import { APIGenerateFunc } from './types';
 import { Hono } from 'hono';
 
-const apis : Array<APIGenrateFunc> = [
+const apis : Array<APIGenerateFunc> = [
     getUserServiceAPI,
     getSsoAuthServiceAPI,
     getHealthServiceAPI

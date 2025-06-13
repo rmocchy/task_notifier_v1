@@ -7,9 +7,9 @@ import {
 } from "./schemas";
 import { googleAuthUriHandler, tokenExchangeHandler } from "./handlers";
 import { OpenAPIHono } from "@hono/zod-openapi";
-import { APIGenrateFunc, SwaggerConfig } from "../types";
+import { APIGenerateFunc, SwaggerConfig } from "../types";
 
-const getSsoAuthServiceAPI: APIGenrateFunc = () => {
+const getSsoAuthServiceAPI: APIGenerateFunc = () => {
   const api = new OpenAPIHono();
 
   api.openapi(googleAuthUrlRoute, googleAuthUriHandler);

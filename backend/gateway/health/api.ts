@@ -7,9 +7,9 @@ import {
 } from "./schemas";
 import { healthCheckHandler, healthCheckIntegrateHandler } from "./handlers";
 import { OpenAPIHono } from "@hono/zod-openapi";
-import { APIGenrateFunc, SwaggerConfig } from "../types";
+import { APIGenerateFunc, SwaggerConfig } from "../types";
 
-const getHealthServiceAPI :APIGenrateFunc = () => {
+const getHealthServiceAPI :APIGenerateFunc = () => {
   const api = new OpenAPIHono();
 
   api.openapi(healthRoute, healthCheckHandler);

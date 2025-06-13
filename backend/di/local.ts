@@ -9,12 +9,12 @@ import { registerDBClient } from "backend/src/infra/clients/db_client"
 import { registerGoogleAuthClient } from "backend/src/infra/clients/google_auth_client"
 
 const getLocalWire = () :registerFunc[] => {
-    return regisers;
+    return registers;
 }
 
 export default getLocalWire;
 
-const regisers : Array<registerFunc>= [
+const registers : Array<registerFunc>= [
     // configs
     registerDBConfig,
     registerGoogleAuthConfig,

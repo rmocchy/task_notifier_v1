@@ -9,7 +9,7 @@ export const GoogleAuthUriResponseSchema = z.object({
 });
 export type GoogleAuthUriResponse = z.infer<typeof GoogleAuthUriResponseSchema>;
 
-// TokenExchane
+// TokenExchange
 export const TokenExchangeRequestSchema = z.object({
   code: z.string().min(1),
 });

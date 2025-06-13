@@ -2,10 +2,10 @@ import { createRoute } from "@hono/zod-openapi";
 import { UserCountResponseSchema } from "./schemas";
 import { z } from "zod";
 import { OpenAPIHono } from "@hono/zod-openapi";
-import { APIGenrateFunc, SwaggerConfig } from "../types";
+import { APIGenerateFunc, SwaggerConfig } from "../types";
 import { userCountHandler } from "./handlers";
 
-const getUserServiceAPI: APIGenrateFunc = () => {
+const getUserServiceAPI: APIGenerateFunc = () => {
   const api = new OpenAPIHono();
 
   api.openapi(userCountRoute, userCountHandler);

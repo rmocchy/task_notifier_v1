@@ -7,4 +7,4 @@ export type SwaggerConfig = {
   relativeFilePath: string;
 }
 
-export type APIGenrateFunc = () => {honoAPI: OpenAPIHono, config: SwaggerConfig};
+export type APIGenerateFunc = () => {honoAPI: OpenAPIHono, config: SwaggerConfig};
