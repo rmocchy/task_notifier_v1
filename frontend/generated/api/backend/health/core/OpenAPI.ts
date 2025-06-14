@@ -1,13 +1,12 @@
 /* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
-/* tslint:disable */
-/* eslint-disable */
+ 
 import type { ApiRequestOptions } from './ApiRequestOptions';
 
 type Resolver<T> = (options: ApiRequestOptions) => Promise<T>;
 type Headers = Record<string, string>;
 
-export type OpenAPIConfig = {
+export interface OpenAPIConfig {
     BASE: string;
     VERSION: string;
     WITH_CREDENTIALS: boolean;
@@ -17,7 +16,7 @@ export type OpenAPIConfig = {
     PASSWORD?: string | Resolver<string> | undefined;
     HEADERS?: Headers | Resolver<Headers> | undefined;
     ENCODE_PATH?: ((path: string) => string) | undefined;
-};
+}
 
 export const OpenAPI: OpenAPIConfig = {
     BASE: '',

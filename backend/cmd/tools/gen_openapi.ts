@@ -1,6 +1,6 @@
 import "reflect-metadata"
 import { writeFileSync } from 'fs'
-import apis from "backend/gateway/apis";
+import apis from "../../gateway/apis";
 
 const OPENAPI_VERSION = "3.1.0";
 const GENERATE_ROOT = "../openapi/backend";

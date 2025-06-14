@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.9"
 
 ## DBのローカル構築はこちらを参照
 ## https://neon.tech/guides/local-development-with-neon#local-postgresql
@@ -20,6 +20,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - backend_network
 
   neon-proxy:
     image: ghcr.io/timowilhelm/local-neon-http-proxy:main
@@ -65,7 +67,12 @@ services:
       - /app/backend/node_modules
     env_file:
       - ./env/.env.backend
-    command: make start_backend-dev
+    command: make start_backend
+    networks:
+      - backend_network
     depends_on:
       postgres:
         condition: service_healthy
+networks:
+  backend_network:
+    driver: bridge

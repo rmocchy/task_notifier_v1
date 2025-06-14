@@ -1,5 +1,6 @@
 import { injectable, inject, Container } from "inversify"
 import { DBClientToken, IDBClient } from '../infra/clients/db_client'
+import { HealthCheckRequest, HealthCheckResponse } from "@backend/gateway/health/schemas"
 
 export const HealthCheckUseCaseToken = Symbol("HealthCheckUseCaseToken")
 
@@ -10,15 +11,7 @@ export const registerHealthCheckUseCase = (container: Container) => {
 }
 
 export interface IHealthCheckUseCase {
-  execute(): Promise<HealthCheckResponse>
-}
-
-export interface HealthCheckResponse {
-  status: 'healthy' | 'unhealthy'
-  timestamp: string
-  details: {
-    database: boolean
-  }
+  execute(req: HealthCheckRequest): Promise<HealthCheckResponse>
 }
 
 @injectable()

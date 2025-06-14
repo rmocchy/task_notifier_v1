@@ -1,15 +1,25 @@
-import { injectable, inject, Container } from "inversify"
-import { UserRepositoryToken, IUserRepository } from "../infra/user_repository";
+import { injectable, inject, Container } from "inversify";
+import {
+  UserRepositoryToken,
+  IUserRepository,
+} from "../repository/user_repository";
+import {
+  UserCountRequest,
+  UserCountResponse,
+} from "@backend/gateway/user/schemas";
 
 export const UserUseCaseToken = Symbol("UserUseCaseToken");
 
-export type IUserUseCase = {
-  countUsersByCreatedAt(createdAt: Date): Promise<number>;
+export interface IUserUseCase {
+  countUsersByCreatedAt(req: UserCountRequest): Promise<UserCountResponse>;
 }
 
 export const registerUserUseCase = (container: Container) => {
-  container.bind<IUserUseCase>(UserUseCaseToken).to(UserUseCase).inSingletonScope();
-}
+  container
+    .bind<IUserUseCase>(UserUseCaseToken)
+    .to(UserUseCase)
+    .inSingletonScope();
+};
 
 @injectable()
 export class UserUseCase {
@@ -17,7 +27,9 @@ export class UserUseCase {
     @inject(UserRepositoryToken) private userRepository: IUserRepository
   ) {}
 
-  async countUsersByCreatedAt(createdAt: Date): Promise<number> {
-    return await this.userRepository.CountUsersByCreatedAt(createdAt);
+  async countUsersByCreatedAt(_: UserCountRequest): Promise<UserCountResponse> {
+    const now = new Date();
+    const res = await this.userRepository.CountUsersByCreatedAt(now);
+    return { count: res };
   }
 }

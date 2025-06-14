@@ -5,14 +5,15 @@ import {
   TokenExchangeRequestSchema,
   TokenExchangeResponseSchema
 } from "./schemas";
-import { googleAuthUriHandler, tokenExchangeHandler } from "./handlers";
+import { getGoogleAuthUriHandler, tokenExchangeHandler } from "./handlers";
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { APIGenerateFunc, SwaggerConfig } from "../types";
+import { ErrResponses } from "../common/error";
 
 const getSsoAuthServiceAPI: APIGenerateFunc = () => {
   const api = new OpenAPIHono();
 
-  api.openapi(googleAuthUrlRoute, googleAuthUriHandler);
+  api.openapi(googleAuthUrlRoute, getGoogleAuthUriHandler);
   api.openapi(googleTokenRoute, tokenExchangeHandler);
 
   return { honoAPI: api, config};
@@ -41,6 +42,7 @@ const googleAuthUrlRoute = createRoute({
       },
       description: "認証URLを取得",
     },
+    ...ErrResponses,
   },
 });
 
@@ -67,6 +69,7 @@ const googleTokenRoute = createRoute({
       },
       description: "認証コードからトークンを取得",
     },
+    ...ErrResponses,
   },
 });
 

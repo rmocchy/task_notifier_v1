@@ -2,18 +2,16 @@ import { createRoute } from "@hono/zod-openapi";
 import {
   HealthCheckRequestSchema,
   HealthCheckResponseSchema,
-  IntegratedHealthCheckRequestSchema,
-  IntegratedHealthCheckResponseSchema,
 } from "./schemas";
-import { healthCheckHandler, healthCheckIntegrateHandler } from "./handlers";
+import { healthCheckHandler } from "./handlers";
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { APIGenerateFunc, SwaggerConfig } from "../types";
+import { ErrResponses } from "../common/error";
 
 const getHealthServiceAPI :APIGenerateFunc = () => {
   const api = new OpenAPIHono();
 
   api.openapi(healthRoute, healthCheckHandler);
-  api.openapi(healthIntegrateRoute, healthCheckIntegrateHandler);
 
   return  { honoAPI: api, config};
 };
@@ -43,25 +41,6 @@ const healthRoute = createRoute({
       },
       description: "Basic health check status",
     },
-  },
-});
-
-// 統合ヘルスチェックエンドポイント（DBを含む）
-const healthIntegrateRoute = createRoute({
-  method: "get",
-  path: "/health_integrate",
-  operationId: "integratedHealthCheck",
-  request: {
-    query: IntegratedHealthCheckRequestSchema,
-  },
-  responses: {
-    200: {
-      content: {
-        "application/json": {
-          schema: IntegratedHealthCheckResponseSchema,
-        },
-      },
-      description: "Integrated health check status including database",
-    },
+    ...ErrResponses,
   },
 });

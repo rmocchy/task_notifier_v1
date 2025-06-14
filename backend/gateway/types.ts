@@ -1,6 +1,6 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
 
-export type SwaggerConfig = {
+export interface SwaggerConfig {
   version: string;
   title: string;
   description?: string;

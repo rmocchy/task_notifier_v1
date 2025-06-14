@@ -4,13 +4,15 @@
     "baseUrl": ".",
     "outDir": "dist",
     "rootDir": ".",
-    "module": "CommonJS",
+    "module": "commonjs",
     "target": "ES2022",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "declaration": true,
     "paths": {
-      "backend/*": ["./*"] // ← backend ディレクトリのエイリアス
+      "@backend/*": ["*"],
     }
   },
-  "include": ["src", "routes", "cmd", "configs", "gateway"]
+  "include": ["cmd", "configs", "gateway", "prisma", "pkg", "src"],
+  "exclude": ["node_modules", "dist", "scripts"]
 }

@@ -5,7 +5,7 @@ export const GoogleAuthUriRequestSchema = z.object({});
 export type GoogleAuthUriRequest = z.infer<typeof GoogleAuthUriRequestSchema>;
 
 export const GoogleAuthUriResponseSchema = z.object({
-  url: z.string().url(),
+  uri: z.string().url(),
 });
 export type GoogleAuthUriResponse = z.infer<typeof GoogleAuthUriResponseSchema>;
 

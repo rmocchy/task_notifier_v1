@@ -3,7 +3,7 @@ import { Container } from 'inversify';
 
 export const GoogleAuthConfigToken = Symbol.for('GoogleAuthConfig');
 
-export type GoogleAuthConfig = {
+export interface GoogleAuthConfig {
     clientId: string;
     clientSecret: string;
     redirectUri: string;

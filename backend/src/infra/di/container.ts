@@ -9,7 +9,7 @@ export const getContainer = () => {
     return container;
 }
 
-export const initializeContainer = (wires: Array<registerFunc>) => {
+export const initializeContainer = (wires: registerFunc[]) => {
     const newContainer = new Container();
     wires.forEach((register) => {
         register(newContainer)

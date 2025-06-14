@@ -1,9 +1,10 @@
 import { createRoute } from "@hono/zod-openapi";
-import { UserCountResponseSchema } from "./schemas";
+import { UserCountResponseSchema, UserCountRequestSchema } from "./schemas";
 import { z } from "zod";
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { APIGenerateFunc, SwaggerConfig } from "../types";
 import { userCountHandler } from "./handlers";
+import { ErrResponses } from "../common/error";
 
 const getUserServiceAPI: APIGenerateFunc = () => {
   const api = new OpenAPIHono();
@@ -27,7 +28,7 @@ const userCountRoute = createRoute({
   path: "/users/count",
   operationId: "userCount",
   request: {
-    query: z.object({}),
+    query: UserCountRequestSchema
   },
   responses: {
     200: {
@@ -38,5 +39,6 @@ const userCountRoute = createRoute({
       },
       description: "ユーザー数を取得",
     },
+    ...ErrResponses
   },
 });

@@ -1,5 +1,7 @@
+import { Context } from 'hono';
+
 function timeoutMiddleware(timeoutMs: number) {
-  return async (c: any, next: () => Promise<void>) => {
+  return async (c: Context, next: () => Promise<void>) => {
     const timeoutPromise = new Promise((_, reject) => {
       setTimeout(() => reject(new Error('Request timed out')), timeoutMs);
     });

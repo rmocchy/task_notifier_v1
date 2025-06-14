@@ -2,13 +2,18 @@ import { Context } from "hono";
 import {
   UserUseCaseToken,
   IUserUseCase,
-} from "backend/src/usecase/user_usecase";
-import { getContainer } from "backend/di/main";
+} from "@backend/src/usecase/user_usecase";
+import { getContainer } from "@backend/src/infra/di/container";
+import { runUseCaseForGET } from "@backend/pkg/gateway";
+import { UserCountRequestSchema } from "./schemas";
 
 export const userCountHandler = async (c: Context) => {
-  const now = new Date();
   const userUseCase = getContainer().get<IUserUseCase>(UserUseCaseToken);
-  const res = await userUseCase.countUsersByCreatedAt(now);
-
-  return c.json({ count: res });
+  return await runUseCaseForGET({
+    context: c,
+    reqSchema: UserCountRequestSchema,
+    usecaseFn: async (args) => {
+      return await userUseCase.countUsersByCreatedAt(args);
+    },
+  });
 };

@@ -1,25 +1,31 @@
 import { Context } from "hono";
-import { SSOLoginUseCaseToken, ISSOLoginUseCase } from "backend/src/usecase/sso_login_usecase";
-import { getContainer } from "backend/di/main";
+import {
+  SSOLoginUseCaseToken,
+  ISSOLoginUseCase,
+} from "../../src/usecase/sso_login_usecase";
+import { getContainer } from "../../src/infra/di/container";
+import { runUseCaseForGET, runUseCase } from "../../pkg/gateway";
+import {
+  GoogleAuthUriRequestSchema,
+  TokenExchangeRequestSchema,
+} from "./schemas";
 
-
-export const googleAuthUriHandler = async (c: Context) => {
-    const ssoLoginUsecase = getContainer().get<ISSOLoginUseCase>(SSOLoginUseCaseToken);
-    const res = await ssoLoginUsecase.generateAuthUrl()
-  return c.json({ url: res.url, state: res.state }, 200);
+export const getGoogleAuthUriHandler = async (c: Context) => {
+  const ssoLoginUsecase =
+    getContainer().get<ISSOLoginUseCase>(SSOLoginUseCaseToken);
+  return await runUseCaseForGET({
+    context: c,
+    reqSchema: GoogleAuthUriRequestSchema,
+    usecaseFn: async (args) => await ssoLoginUsecase.generateAuthUri(args),
+  });
 };
 
 export const tokenExchangeHandler = async (c: Context) => {
-  const ssoLoginUsecase =  getContainer().get<ISSOLoginUseCase>(SSOLoginUseCaseToken);
-
-  const body = await c.req.json();
-  const code = body.code;
-
-  const res = await ssoLoginUsecase.exchangeCodeForToken(code);
-
-  // cookieにリフレッシュトークンを設定するための処理が必要
-  
-  return c.json({
-    access_token: res.accessToken,
-  }, 200);
+  const ssoLoginUsecase =
+    getContainer().get<ISSOLoginUseCase>(SSOLoginUseCaseToken);
+  return await runUseCase({
+    context: c,
+    reqSchema: TokenExchangeRequestSchema,
+    usecaseFn: async (args) => await ssoLoginUsecase.exchangeCodeForToken(args),
+  });
 };

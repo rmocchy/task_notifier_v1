@@ -20,14 +20,14 @@ COPY backend/package.json ./backend/
 RUN npm install -g pnpm
 
 # 依存関係をインストール
-RUN pnpm install
-
-ENV PATH="/app/node_modules/.bin:/app/backend/node_modules/.bin:${PATH}"
+RUN pnpm i --frozen-lockfile
 
 # バックエンドのソースコードをコピー
 COPY backend ./backend
 
-# 作業ディレクトリをルートに設定
+ENV PATH="/app/node_modules/.bin:/app/backend/node_modules/.bin:${PATH}"
+
+# 作業ディレクトリをルートに戻す
 WORKDIR /app
 
 # バックエンドのポートを公開

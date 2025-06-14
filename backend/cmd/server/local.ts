@@ -1,10 +1,10 @@
 import "reflect-metadata"
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
-import {initializeContainer} from "../../di/main"
-import getLocalWire from "../../di/local";
+import {initializeContainer} from "@backend/src/infra/di/container";
+import getLocalWire from "../../src/infra/di/local";
 import { registerRoutesForServer } from "../../gateway/apis";
-import registerMiddleware from "../../src/middleware";
+import registerMiddleware from "../../src/middleware/index";
 
 const main = async () => {
   const port = 8787;

@@ -9,7 +9,7 @@ export const registerDBConfig = (container: Container): void => {
     container.bind<Config>(DBConfigToken).toConstantValue(config);
 }
 
-export type Config = {
+export interface Config {
     user: string;
     host: string;
     database: string;
