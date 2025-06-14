@@ -28,7 +28,7 @@ migrate_backend_v2:
 	make db_prepare_atlas_migrate && \
 	make db_migrate_backend
 
-.PHONY: sync_schema
+.PHONY: sync_api_schema
 sync_api_schema:
 	pnpm -F backend generate:openapi &&\
 	pnpm -F frontend gen:api-all
