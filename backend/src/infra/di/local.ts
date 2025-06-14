@@ -5,7 +5,6 @@ import {registerHealthCheckUseCase} from "../../usecase/healthCheck"
 import {registerSSOLoginUseCase} from "../../usecase/sso_login_usecase"
 import {registerUserUseCase} from "../../usecase/user_usecase"
 import { registerUserRepository } from "../../repository/user_repository"
-import { registerDBClient } from "../clients/db_client"
 import { registerGoogleAuthClient } from "../clients/google_auth_client"
 import { registerDBClientV2 } from "../clients/db_client_v2"
 
@@ -21,7 +20,6 @@ const registers : registerFunc[]= [
     registerGoogleAuthConfig,
     // clients
     registerDBClientV2,
-    registerDBClient,
     registerGoogleAuthClient,
     // repositories
     registerUserRepository,
