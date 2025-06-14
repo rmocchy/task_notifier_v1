@@ -3,7 +3,7 @@ import {
   SSOLoginUseCaseToken,
   ISSOLoginUseCase,
 } from "../../src/usecase/sso_login_usecase";
-import { getContainer } from "../../src/infra/di/container";
+import { getContainer } from "@backend/src/infra/di/container";
 import { runUseCaseForGET, runUseCase } from "../../pkg/gateway";
 import {
   GoogleAuthUriRequestSchema,
