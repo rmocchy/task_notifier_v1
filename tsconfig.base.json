@@ -6,9 +6,6 @@
     "strict": true,
     "jsx": "react-jsx",
     "baseUrl": ".",
-    "paths": {
-      "@monorepo/common/*": ["common/src/*"]
-    },
     "esModuleInterop": true,
     "skipLibCheck": true
   }

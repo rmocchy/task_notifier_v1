@@ -13,11 +13,8 @@ COPY pnpm-lock.yaml ./
 COPY pnpm-workspace.yaml ./
 COPY Makefile ./
 
-# commonパッケージをコピー
-COPY packages/common ./packages/common
-
 # フロントエンドのpackage.jsonをコピー
-COPY packages/frontend/package.json ./packages/frontend/
+COPY frontend/package.json ./frontend/
 
 # pnpmをインストール
 RUN npm install -g pnpm
@@ -25,8 +22,11 @@ RUN npm install -g pnpm
 # 依存関係をインストール
 RUN pnpm install
 
+# バイナリへのパスを追加
+ENV PATH="/app/node_modules/.bin:/app/frontend/node_modules/.bin:${PATH}"
+
 # フロントエンドのソースコードをコピー
-COPY packages/frontend ./packages/frontend
+COPY frontend ./frontend
 
 # 作業ディレクトリをフロントエンドに移動
 WORKDIR /app

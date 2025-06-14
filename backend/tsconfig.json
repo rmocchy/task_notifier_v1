@@ -1,0 +1,18 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "dist",
+    "rootDir": ".",
+    "module": "commonjs",
+    "target": "ES2022",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "declaration": true,
+    "paths": {
+      "@backend/*": ["*"],
+    }
+  },
+  "include": ["cmd", "configs", "gateway", "prisma", "pkg", "src"],
+  "exclude": ["node_modules", "dist", "scripts"]
+}
