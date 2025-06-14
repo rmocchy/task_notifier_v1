@@ -16,7 +16,6 @@
   "dependencies": {
     "@hono/node-server": "^1.14.2",
     "@hono/zod-openapi": "^0.9.6",
-    "@pgtyped/runtime": "^2.4.2",
     "@prisma/client": "^6.9.0",
     "dotenv": "^16.4.5",
     "google-auth-library": "^9.15.1",
@@ -24,9 +23,7 @@
     "inversify": "^7.5.2",
     "module-alias": "^2.2.3",
     "pg": "^8.16.0",
-    "postgres": "^3.4.3",
     "reflect-metadata": "^0.2.2",
-    "typed-sql": "^0.10.0",
     "zod": "^3.22.4",
     "zod-validation-error": "^2.1.0"
   },
