@@ -6,7 +6,7 @@ import {runUseCaseForGET} from "../../pkg/gateway";
 
 
 export const healthCheckHandler = async (c:Context) => {
-  const healthCheckUseCase = getContainer().get<IHealthCheckUseCase>(HealthCheckUseCaseToken)
+  const healthCheckUseCase = getContainer().get<IHealthCheckUseCase>(HealthCheckUseCaseToken);
   return await runUseCaseForGET(
     {
       context: c,
