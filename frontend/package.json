@@ -11,8 +11,11 @@
     "gen:api-all": "pnpm gen:api-sso-auth && pnpm gen:api-users&& pnpm gen:api-health"
   },
   "dependencies": {
+    "axios": "^1.6.8",
+    "form-data": "^4.0.0",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "react-router-dom": "^7.6.2"
   },
   "devDependencies": {
     "@types/node": "^20.17.50",

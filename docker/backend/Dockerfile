@@ -16,19 +16,16 @@ COPY Makefile ./
 # バックエンドのpackage.jsonをコピー
 COPY backend/package.json ./backend/
 
+# バックエンドのソースコードをコピー
+COPY backend ./backend
+
 # pnpmをインストール
 RUN npm install -g pnpm
 
 # 依存関係をインストール
 RUN pnpm i --frozen-lockfile
 
-# バックエンドのソースコードをコピー
-COPY backend ./backend
-
 ENV PATH="/app/node_modules/.bin:/app/backend/node_modules/.bin:${PATH}"
-
-# 作業ディレクトリをルートに戻す
-WORKDIR /app
 
 # バックエンドのポートを公開
 EXPOSE 8787
