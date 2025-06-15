@@ -19,6 +19,8 @@ docker compose up -d
 make migrate_be_local-docker
 ```
 
+3. (for developers)
+
 蛇足: dockerを介さずにサービスを起動することも可能(やらなくても良い)
 ```
 ## install

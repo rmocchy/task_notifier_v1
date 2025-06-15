@@ -48,7 +48,7 @@ importers:
         specifier: ^9.15.1
         version: 9.15.1(encoding@0.1.13)
       hono:
-        specifier: ^3.0.0
+        specifier: ^3.12.12
         version: 3.12.12
       inversify:
         specifier: ^7.5.2
