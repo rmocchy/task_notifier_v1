@@ -1,5 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 
+// 注意: 副作用実装禁止
 const getAxiosCustom = (): AxiosInstance => {
   const ax = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL,
