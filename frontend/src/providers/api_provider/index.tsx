@@ -3,14 +3,14 @@ import { DefaultApi as ssoAPI } from "../../../generated/api_backend/sso-auth";
 import { DefaultApi as userAPI } from "../../../generated/api_backend/user";
 import { DefaultApi as healthAPI } from "../../../generated/api_backend/health";
 
-import getCustomAPIGenerator from "./_get_custom_api";
+import getCustomAPI from "./_get_custom_api";
 
 // FEで使えるAPIをここで登録する
 // baseURLやaxiosの設定はgetCustomAPIGeneratorで行います
-const apiFactories = {
-  authApi: getCustomAPIGenerator(ssoAPI),
-  userApi: getCustomAPIGenerator(userAPI),
-  healthApi: getCustomAPIGenerator(healthAPI),
+const apis = {
+  authApi: getCustomAPI(ssoAPI),
+  userApi: getCustomAPI(userAPI),
+  healthApi: getCustomAPI(healthAPI),
 };
 
 // =======================================
@@ -19,20 +19,14 @@ const apiFactories = {
 
 // 関数戻り値をマッピングする
 type ApiClients = {
-  [K in keyof typeof apiFactories]: ReturnType<typeof apiFactories[K]>
+  [K in keyof typeof apis]: typeof apis[K]
 };
 
 const ApiContext = createContext<ApiClients | undefined>(undefined);
 
 export function ApiProvider({ children }:{children: ReactNode}) {
-  const clients = useMemo(() => {
-    return Object.fromEntries(
-      Object.entries(apiFactories).map(([key, factory]) => [key, factory()])
-    ) as ApiClients;
-  }, []);
-
   return (
-    <ApiContext.Provider value={clients}>
+    <ApiContext.Provider value={apis}>
       {children}
     </ApiContext.Provider>
   )
