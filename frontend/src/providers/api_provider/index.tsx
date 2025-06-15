@@ -24,6 +24,7 @@ type ApiClients = {
 
 const ApiContext = createContext<ApiClients | undefined>(undefined);
 
+// Provider定義
 export function ApiProvider({ children }:{children: ReactNode}) {
   return (
     <ApiContext.Provider value={apis}>
