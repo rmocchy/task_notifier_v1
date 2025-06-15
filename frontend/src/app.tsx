@@ -16,7 +16,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/auth/start" element={<StartPage />} />
-            <Route path="/auth/callback" element={<CallbackPage />} />
+            <Route path="/auth/sso/callback" element={<CallbackPage />} />
           </Routes>
         </Router>
       </ApiProvider>

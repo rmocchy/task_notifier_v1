@@ -45,7 +45,7 @@ class SSOLoginUseCase implements ISSOLoginUseCase {
     const tokens = await this.googleAuthClient.getToken(req.code).catch((error) => {
       throw error
   });
-    if (!tokens.accessToken || !tokens.refreshToken) {
+    if (!tokens.idToken || !tokens.refreshToken) {
       throw new AppError(
         ErrorCode.UNAUTHORIZED,
         "Failed to get tokens from Google"
@@ -53,7 +53,7 @@ class SSOLoginUseCase implements ISSOLoginUseCase {
     }
     // TODO: cookieコールバックを呼んでsetCookieを行う
     return {
-      access_token: tokens.accessToken,
+      access_token: tokens.idToken,
     }
   }
 

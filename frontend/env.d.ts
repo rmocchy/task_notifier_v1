@@ -3,7 +3,7 @@
 
 // viteで環境変数を扱いたい場合はここに登録する
 interface ImportMetaEnv {
-  readonly VITE_API_URL: string;
+  readonly VITE_API_BASE_URL: string;
 }
 
 interface ImportMeta {

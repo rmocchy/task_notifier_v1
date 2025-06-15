@@ -7,7 +7,7 @@ export const GoogleAuthClientToken = Symbol("GoogleAuthClientToken");
 
 export interface IGoogleAuthClient {
   generateAuthUrl(): { url: string; state: string };
-  getToken(code: string): Promise<{ accessToken: string; refreshToken: string; expiryDate: number | null }>;
+  getToken(code: string): Promise<{ idToken: string; refreshToken: string; expiryDate: number | null }>;
   refreshAccessToken(refreshToken: string): Promise<{ accessToken: string; expiryDate: number | null }>;
   verifyAccessToken(accessToken: string): Promise<{ isValid: boolean; userId?: string; email?: string; error?: string }>;
 }
@@ -53,7 +53,7 @@ class GoogleAuthClient {
       access_type: 'offline',
       scope: scopes,
       prompt: 'consent',
-      state: state
+      state: state,
     });
 
     return { url, state };
@@ -64,13 +64,15 @@ class GoogleAuthClient {
    * @param code 認可コード
    * @returns アクセストークンとリフレッシュトークン
    */
+  // acccessTokenはgoogleサービスを扱うためのトークンらしいので、サービスで使う予定が出ない限りは使わない
   public async getToken(code: string) {
     const { tokens } = await this.client.getToken(code);
-    if (!tokens.access_token || !tokens.refresh_token || !tokens.expiry_date) {
+    if (!tokens.id_token || !tokens.refresh_token || !tokens.expiry_date) {
       throw new Error('Failed to retrieve access token or refresh token from Google');
     }
     return {
-      accessToken: tokens.access_token,
+      // accessToken: tokens.access_token,
+      idToken: tokens.id_token,
       refreshToken: tokens.refresh_token,
       expiryDate: tokens.expiry_date
     };

@@ -1,7 +1,7 @@
 import { createContext, useContext, useMemo, ReactNode } from "react";
-import { DefaultApi as ssoAPI } from "frontend/generated/api_backend/sso-auth";
-import { DefaultApi as userAPI } from "frontend/generated/api_backend/user";
-import { DefaultApi as healthAPI } from "frontend/generated/api_backend/health";
+import { DefaultApi as ssoAPI } from "../../../generated/api_backend/sso-auth";
+import { DefaultApi as userAPI } from "../../../generated/api_backend/user";
+import { DefaultApi as healthAPI } from "../../../generated/api_backend/health";
 
 import getCustomAPIGenerator from "./_get_custom_api";
 
