@@ -21,13 +21,37 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "url": {
+                    "uri": {
                       "type": "string",
                       "format": "uri"
                     }
                   },
                   "required": [
-                    "url"
+                    "uri"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "内部サーバーエラー",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "ユーザー向けエラータイプ（例: Internal Server Error）"
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "開発者向けの詳細エラー内容"
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "message"
                   ]
                 }
               }
@@ -71,6 +95,30 @@
                   },
                   "required": [
                     "access_token"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "内部サーバーエラー",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "ユーザー向けエラータイプ（例: Internal Server Error）"
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "開発者向けの詳細エラー内容"
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "message"
                   ]
                 }
               }

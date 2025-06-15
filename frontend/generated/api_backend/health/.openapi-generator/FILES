@@ -1,0 +1,13 @@
+.gitignore
+.npmignore
+.openapi-generator-ignore
+api.ts
+base.ts
+common.ts
+configuration.ts
+docs/DefaultApi.md
+docs/HealthCheck200Response.md
+docs/HealthCheck200ResponseDetails.md
+docs/HealthCheck500Response.md
+git_push.sh
+index.ts

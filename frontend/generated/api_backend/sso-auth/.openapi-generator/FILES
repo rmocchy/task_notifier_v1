@@ -1,0 +1,14 @@
+.gitignore
+.npmignore
+.openapi-generator-ignore
+api.ts
+base.ts
+common.ts
+configuration.ts
+docs/DefaultApi.md
+docs/GoogleAuthUri200Response.md
+docs/GoogleAuthUri500Response.md
+docs/TokenExchange200Response.md
+docs/TokenExchangeRequest.md
+git_push.sh
+index.ts

@@ -7,5 +7,14 @@ export default defineConfig({
   resolve: {},
   build: {
     outDir: 'dist'
+  },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://backend:8787',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    }
   }
 })

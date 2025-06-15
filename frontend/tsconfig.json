@@ -1,10 +1,13 @@
 {
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "noUncheckedIndexedAccess": true,
     "outDir": "dist",
     "rootDir": ".",
     "lib": ["dom", "dom.iterable", "esnext"],
     "types": ["node", "vite"]
   },
-  "include": ["src", "generated"]
+  "include": ["src", "generated", "env.d.ts"],
 }

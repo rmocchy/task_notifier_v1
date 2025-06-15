@@ -31,11 +31,23 @@
                     "timestamp": {
                       "type": "string",
                       "format": "date-time"
+                    },
+                    "details": {
+                      "type": "object",
+                      "properties": {
+                        "database": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "database"
+                      ]
                     }
                   },
                   "required": [
                     "status",
-                    "timestamp"
+                    "timestamp",
+                    "details"
                   ]
                 }
               }
@@ -60,52 +72,6 @@
                   "required": [
                     "error",
                     "message"
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/health_integrate": {
-      "get": {
-        "operationId": "integratedHealthCheck",
-        "responses": {
-          "200": {
-            "description": "Integrated health check status including database",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "enum": [
-                        "healthy",
-                        "unhealthy"
-                      ]
-                    },
-                    "timestamp": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "details": {
-                      "type": "object",
-                      "properties": {
-                        "database": {
-                          "type": "boolean"
-                        }
-                      },
-                      "required": [
-                        "database"
-                      ]
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "timestamp",
-                    "details"
                   ]
                 }
               }

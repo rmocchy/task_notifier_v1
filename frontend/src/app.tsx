@@ -1,33 +1,28 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import StartPage from "./pages/StartPage";
+import CallbackPage from "./pages/CallbackPage";
 
-// ページコンポーネントのインポート
-import Home from './pages/Home'
-import StartPage from './pages/StartPage'
-import CallbackPage from './pages/CallbackPage'
-
-// OpenAPIの設定
-import { OpenAPI as SsoAuthOpenAPI } from '../generated/api/backend/sso-auth'
-import { OpenAPI as UserOpenAPI } from '../generated/api/backend/user'
-
-// APIのベースURLを設定
-SsoAuthOpenAPI.BASE = '/api'
-UserOpenAPI.BASE = '/api'
+import { ApiProvider } from "./providers/api_provider";
+import TanStackQueryProvider from "./providers/query_provider";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/auth/start" element={<StartPage />} />
-        <Route path="/auth/callback" element={<CallbackPage />} />
-      </Routes>
-    </Router>
-  )
+    <TanStackQueryProvider>
+      <ApiProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/auth/start" element={<StartPage />} />
+            <Route path="/auth/callback" element={<CallbackPage />} />
+          </Routes>
+        </Router>
+      </ApiProvider>
+    </TanStackQueryProvider>
+  );
 }
 
-const root = ReactDOM.createRoot(document.getElementById('root')!)
-root.render(<App />)
-
-
+const root = ReactDOM.createRoot(document.getElementById("root")!);
+root.render(<App />);

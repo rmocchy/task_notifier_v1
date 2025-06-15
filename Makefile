@@ -32,13 +32,17 @@ migrate_backend_v2:
 sync_api_schema:
 	pnpm -F backend generate:openapi &&\
 	pnpm -F frontend gen:api-all
-
-.PHONY: gen_db_method_backend
-gen_db_method_backend:
-	pnpm -F backend pgtyped
 	
 ## サブコマンド
 ## よく使うコマンドは基本的にはdockerコンテナで実行するが、その実態処理はいかに記載する
+# for Codegen@frontend by openapi-generator
+.PHONY: codegen_frontend
+codegen_frontend:
+	bash scripts/openapi_codegen_tsaxios.sh openapi/backend/sso-auth.json frontend/generated/api_backend/sso-auth
+	bash scripts/openapi_codegen_tsaxios.sh openapi/backend/user.json frontend/generated/api_backend/user
+	bash scripts/openapi_codegen_tsaxios.sh openapi/backend/health.json frontend/generated/api_backend/health
+
+# For Migration
 .PHONY: db_schema_build_backend
 db_schema_build_backend:
 	sh scripts/db_schema_build.sh backend/db_schema tmp/db/backend.sql
