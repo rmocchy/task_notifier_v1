@@ -13,23 +13,20 @@ COPY pnpm-lock.yaml ./
 COPY pnpm-workspace.yaml ./
 COPY Makefile ./
 
-# commonパッケージをコピー
-COPY packages/common ./packages/common
+# フロントエンドのソースコードをコピー
+COPY frontend ./frontend
 
 # フロントエンドのpackage.jsonをコピー
-COPY packages/frontend/package.json ./packages/frontend/
+COPY frontend/package.json ./frontend/
 
 # pnpmをインストール
 RUN npm install -g pnpm
 
-# 依存関係をインストール
-RUN pnpm install
+# 依存関係をインストール（package.jsonに記載された依存関係をすべてインストール）
+RUN pnpm install --frozen-lockfile
 
-# フロントエンドのソースコードをコピー
-COPY packages/frontend ./packages/frontend
-
-# 作業ディレクトリをフロントエンドに移動
-WORKDIR /app
+# バイナリへのパスを追加
+ENV PATH="/app/node_modules/.bin:/app/frontend/node_modules/.bin:${PATH}"
 
 # 開発サーバーのポートを公開
 EXPOSE 5173

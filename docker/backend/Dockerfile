@@ -13,23 +13,19 @@ COPY pnpm-lock.yaml ./
 COPY pnpm-workspace.yaml ./
 COPY Makefile ./
 
-# commonパッケージをコピー
-COPY packages/common ./packages/common
-
 # バックエンドのpackage.jsonをコピー
-COPY packages/backend/package.json ./packages/backend/
+COPY backend/package.json ./backend/
+
+# バックエンドのソースコードをコピー
+COPY backend ./backend
 
 # pnpmをインストール
 RUN npm install -g pnpm
 
 # 依存関係をインストール
-RUN pnpm install
+RUN pnpm i --frozen-lockfile
 
-# バックエンドのソースコードをコピー
-COPY packages/backend ./packages/backend
-
-# 作業ディレクトリをルートに設定
-WORKDIR /app
+ENV PATH="/app/node_modules/.bin:/app/backend/node_modules/.bin:${PATH}"
 
 # バックエンドのポートを公開
 EXPOSE 8787

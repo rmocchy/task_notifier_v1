@@ -14,21 +14,56 @@ start_backend-dev:
 	pnpm backend dev
 
 ## 開発用
-## migrate_* は指定のサービスのマイグレーションを実行する
-## migrate_*-docker は指定のサービスのマイグレーションをDockerコンテナで実行する
 .PHONY: setup_env
 setup_env:
 	scripts/setup_env.sh
 
-.PHONY: migrate_be_local-docker
-migrate_be_local-docker:
-	docker build -t migrate-local -f docker/migration/Dockerfile . && \
-	docker run --rm -v $(PWD):/app migrate-local make migrate_be_local -e DB_URL=${DB_URL_DOCKER} DB_USER=${DB_USER} DB_PASSWORD=${DB_PASS}
+# migrate_backend_v2 はマイグレーションを行う
+# 以下の環境変数が必要
+# - DB_URL: データベースのURL
+# - DB_NAME: データベース名
+.PHONY: migrate_backend_v2
+migrate_backend_v2:
+	make db_schema_build_backend && \
+	make db_prepare_atlas_migrate && \
+	make db_migrate_backend
 
+.PHONY: sync_api_schema
+sync_api_schema:
+	pnpm -F backend generate:openapi &&\
+	pnpm -F frontend gen:api-all
+	
 ## サブコマンド
 ## よく使うコマンドは基本的にはdockerコンテナで実行するが、その実態処理はいかに記載する
-.PHONY: migrate_be_local
-migrate_be_local:
-	echo "Migrating local database be_local..." && \
-	sh scripts/db_schema_build.sh db_schema/db_backend db_schema/tmp/backend.sql && \
-	sh scripts/db_migrate.sh ${DB_URL} be_local db_schema/tmp/backend.sql
+# for Codegen@frontend by openapi-generator
+.PHONY: codegen_frontend
+codegen_frontend:
+	bash scripts/openapi_codegen_tsaxios.sh openapi/backend/sso-auth.json frontend/generated/api_backend/sso-auth
+	bash scripts/openapi_codegen_tsaxios.sh openapi/backend/user.json frontend/generated/api_backend/user
+	bash scripts/openapi_codegen_tsaxios.sh openapi/backend/health.json frontend/generated/api_backend/health
+
+# For Migration
+.PHONY: db_schema_build_backend
+db_schema_build_backend:
+	sh scripts/db_schema_build.sh backend/db_schema tmp/db/backend.sql
+
+.PHONY: db_prepare_atlas_migrate
+db_prepare_atlas_migrate:
+	docker build -t db_cli -f docker/db_cli/Dockerfile . && \
+	docker run --rm \
+		--network task_notifier_v1_default \
+		-v $(PWD):/app \
+		-e DB_URL=$(DB_URL) \
+		-e DB_NAME=$(DB_NAME) \
+		db_cli \
+		bash scripts/db_prepare_migrate.sh "$$DB_URL" "$$DB_NAME"
+
+.PHONY: db_migrate_backend
+db_migrate_backend:
+	docker run --rm \
+		-v $(PWD):/app \
+		arigaio/atlas schema apply \
+		--url "$$DB_URL/$$DB_NAME?sslmode=disable" \
+		--to "file://app/tmp/db/backend.sql" \
+		--dev-url "$$DB_URL/tmp?sslmode=disable" \
+		--auto-approve

@@ -1,0 +1,12 @@
+.gitignore
+.npmignore
+.openapi-generator-ignore
+api.ts
+base.ts
+common.ts
+configuration.ts
+docs/DefaultApi.md
+docs/UserCount200Response.md
+docs/UserCount500Response.md
+git_push.sh
+index.ts
